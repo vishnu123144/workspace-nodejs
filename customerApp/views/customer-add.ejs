@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      addCustomer = function(){
+        if($("#name").val() != ""){
+          var data = {};
+          data.name = $('#name').val();
+          data.email = $('#email').val();
+          data.phone = $('#phone').val();
+          data.address = $('#address').val();
+          $.ajax({url: "/api/customer",method:'POST', 
+            data:data,
+            success: function(response){
+              if(response.result =="success"){
+                location = "/customer";
+              }else{
+                alert(response.msg);
+              }
+            }});
+        }else{
+          alert("Name cannot be blank ");
+        }
+      }
+    </script>
+    <h1><%= title %></h1>
+    <form>
+        <input id="name" placeholder="Name" /> <br/><br/>
+        <input id="email" placeholder="Email" /> <br/><br/>
+        <input id="address" placeholder="Address" /> <br/><br/>
+        <input id="phone" placeholder="Phone" /> <br/><br/>
+        <input value="Add" type="button" onclick="addCustomer()"/> <br/>
+    </form>
+  </body>
+</html>

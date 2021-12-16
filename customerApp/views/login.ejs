@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+             let doLogin = async () =>{
+        let username = $("#username").val();
+        let password = $("#password").val();
+        
+        let response = await fetch('/users/auth', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({username,password})
+        })
+        .then(response => response.json());
+
+        
+          if(response.result == "success"){
+              location = "/home";
+            }else{              
+              alert("username or password is incorrect");
+            }
+
+        console.log("response",response);
+      }
+    </script>
+    <h1><%= title %></h1>
+    <form>
+      <input id="username" type="" name="" placeholder="Username"><br/><br/>
+      <input id="password" type="password" name="" placeholder="Password"><br/><br/>
+      <input type="button" value="Login" name="" onclick="doLogin()"><br/><br/>
+    </form>
+  </body>
+</html>
+
+<!-- let doLogin = () =>{
+  let username = $("#username").val();
+  let password = $("#password").val();
+  
+  $.ajax({ //$.ajax with POST 
+    url : "/users/auth", //end point
+    type: "POST", 
+    data : {username,password},
+    success: function(data, textStatus, jqXHR) {
+      if(data.result == "success"){
+        location = "/home";
+      }else{              
+        alert("username or password is incorrect");
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown){
+      alert("Unable to connect remote server..");
+    }
+});
+} -->

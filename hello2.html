@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title> This is main page</title>
+</head>
+<body>
+	<script type="text/javascript">
+		console.log("hello world to JavaScript");
+		var doPrint = function(msg){
+            return function()
+            {
+			console.log(msg);
+            }
+		}
+		 timeCounter = function(caller,count){
+			for (var i = 0; i < count; i++) {
+				//sleep / timeout of 1 second
+                // setTimeout(doPrint(caller +" "+i +" seconds are over."),1000);
+                
+                setTimeout(doPrint(caller +" "+i +" seconds are over."),i*1000);
+			}
+		}
+
+	</script>
+	<div>
+		This is NodeJS training
+			<form>
+				<input type="" name="" value="Vivek"><br/><br/>
+				<input type="" name="" value="India"><br/><br/>
+				<input  type="color" name="" value="India" ><br/><br/>
+				<input type="button" name="" value="B1" onclick="timeCounter('B1',10)"><br/><br/>
+				<input type="button" name="" value="B2" onclick="timeCounter('B2',20)"><br/><br/>
+			</form>
+	</div>
+</body>
+</html>

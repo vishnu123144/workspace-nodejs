@@ -1,0 +1,40 @@
+mongoose implementation:
+-------------------
+https://mongoosejs.com/ (ODM)
+-------------------
+
+Step 1. make changes in customer-mongo.js
+--------
+change 
+---------
+service.deleteCustomer = function(id,callback){
+  MongoClient.connect(url, { useNewUrlParser: true,useUnifiedTopology: true },function(err, client) {
+    assert.equal(null, err);
+    const db = client.db(dbName);
+    const collection = db.collection('customers');
+    collection.deleteOne({"_id" : ObjectId(id)},function(err,result){
+      callback({result:'success'});
+      client.close();
+    });
+  });
+};
+----------
+to
+----------
+  service.deleteCustomer = (recordId) => {
+    console.log("deleteCustomer..");
+    return customerSchema.deleteOne({"_id" :recordId});
+  }
+----------
+
+Step 2. Mongoose will return promise object itself, Manage response accordingly:
+In file routes/secured-page.js (CHANGE)
+-------------
+router.get('/customer/edit/:id', (req, res, next) => {
+	console.log("id is "+req.params.id);
+  var callback = (customer) =>{
+    console.log(JSON.stringify(customer));
+    res.render('customer-edit', { title: 'Update Customer', customer:customer[0]});
+  }
+	var customer = mongoCustomer.getCustomerById(req.params.id).then(callback);
+});

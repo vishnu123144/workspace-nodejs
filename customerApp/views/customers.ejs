@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      doEdit = function(id){
+        location = '/customer/edit/'+id
+      }
+      doDelete = function(id){
+        console.log("do Delete :"+id);
+        $.ajax({url: "/api/customer",method:'DELETE', 
+            data:{id:id},
+            success: function(response){
+              console.log(JSON.stringify(response));
+              if(response.result =="success"){
+                location = "/customer";
+              }else{
+                alert(response.msg);
+              }
+            }});
+      }
+    </script>
+    <h1><%= title %></h1>
+    <button onclick="location='/dashboard'">Dashboard</button> | 
+    <button onclick="location='/customer'">Customers</button> | 
+    <button onclick="location='/about'">Aboutus</button> | 
+    <button onclick="location='/login'">Logout</button> | 
+    <%= username %>
+    <hr/>
+    <button onclick="location = '/customer/add';">Add Customer</button><br/><br/>
+ <div class="page-data">
+         <div class="data-table">
+            <table border="1" cellpadding="7" cellspacing="7">
+                <tr>
+                    <th width="20px">No</th>
+                    <th width="250px">Name</th>
+                    <th width="220px">Email</th>
+                    <th width="100px">Phone</th>
+                    <th width="300px">Address</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                <% if(data.length){for(var i = 0;i < data.length;i++) { %>       
+                <tr>
+                    <td><%=data[i]._id%></td>
+                    <td><%=data[i].name%></td>
+                    <td><%=data[i].email%></td>
+                    <td><%=data[i].phone%></td>
+                    <td><%=data[i].address%></td>
+                    <td><button onclick="doEdit('<%=data[i]._id%>');" >Edit</button></td>
+                    <td><button onclick="doDelete('<%=data[i]._id %>');">Delete</button></td>
+                </tr>
+            <% }
+             }else{ %>
+                 <tr>
+                    <td colspan="7">No customer found</td>
+                 </tr>
+            <% } %> 
+            </table>
+         </div>
+    </div>
+  </body>
+</html>

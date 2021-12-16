@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let addEmployee = () =>{
+        
+        let firstName = $("#firstName").val();
+        let lastName = $("#lastName").val();
+        let city = $("#city").val();
+        let phone = $("#phone").val();
+        let age = $("#age").val();
+        let dob = $("#dob").val();
+        $.ajax({ //$.ajax with POST 
+          url : "/api/employee", //end point
+          type: "POST", 
+          data : {firstName,lastName,city,phone,age,dob},
+          success: function(data, textStatus, jqXHR) {
+            if(data.result == "ok"){
+              location = "/employee";
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown){
+            alert("Unable to connect remote server..");
+          }
+      });
+      }
+    </script>
+    <h1><%= title %></h1>
+    <form>
+      <input id="firstName" type="" name="" placeholder="firstName" ><br/><br/>
+      <input id="lastName" type="" name="" placeholder="lastName"><br/><br/>
+      <input id="city" type="" name="" placeholder="city" ><br/><br/>
+      <input id="phone" type="" name="" placeholder="Phone" ><br/><br/>
+      <input id="age" type="" name="" placeholder="age" ><br/><br/>
+      <input id="dob" type="date" name="" placeholder="dob" ><br/><br/>
+      <input type="button" value="Add" name="" onclick="addEmployee()"><br/><br/>
+    </form>
+  </body>
+</html>

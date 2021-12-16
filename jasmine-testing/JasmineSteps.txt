@@ -1,0 +1,63 @@
+Understanding Unit test and Jasmine
+------------
+1. install jasmine
+$> npm install -g jasmine
+$> mkdir hello-jasmine
+$> cd hello-jasmine
+
+create file
+appLogic.js >
+---
+var app = {};
+app.name = function() {
+    return "Hello, testing!";
+  }
+
+app.sum = function(a,b) {
+    return a+b;
+  }
+
+app.mul = function(a,b) {
+    return a*b;
+  }
+module.exports = app;
+---
+
+$> jasmine init
+$> cd spec
+
+create file 
+appLogic.spec.js >
+---
+var app = require("../appLogic");
+describe("AppLogic test", function() {
+  it("test of AppLogic name", function() {
+    expect(app.name()).toEqual('Hello, testing!');
+  });
+
+  it("test of sum", function() {
+    expect(app.sum(2,3)).toEqual(6);
+  });
+
+  it("test of mul", function() {
+    expect(app.mul(2,3)).toEqual(6);
+  });
+});
+
+---
+
+$> cd ..
+
+run jasmine to test
+$> jasmine ./spec/appLogic.spec.js
+
+Output
+----
+Started
+...
+
+
+3 specs, 0 failures
+Finished in 0.009 seconds
+----
+

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+    <%= title %>
+</title>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<script type="text/javascript">
+
+let deleteEmployee = (id) => {
+
+
+
+      $.ajax({ //$.ajax with delete
+
+        url: "/api/employee", //end point
+
+        type: "DELETE",
+
+        data: { id },
+
+        success: function (data, textStatus, jqXHR) {
+
+          if (data.result == "ok") {
+
+            location = "/employee";
+
+          } else {
+
+            alert("failed to delete");
+
+          }
+
+        },
+
+        error: function (jqXHR, textStatus, errorThrown) {
+
+          alert("Unable to connect remote server..");
+
+        }
+
+      });
+
+    }
+
+    doSearch = function () {
+      var field = $('#field').val();
+      var searchTxt = $('#searchTxt').val();
+      if (searchTxt.length < 1) {
+        location = "/employee";
+      } else {
+        location = "/employee/" + field + "/" + searchTxt;
+      }
+    }
+
+    let goLocation = function (nextLocation) {
+
+      location = "/" + nextLocation;
+
+    }
+
+
+
+  </script>
+
+  <h1>
+    <%= title %>
+  </h1>
+
+  <button onclick="goLocation('home')">Home</button> |
+
+  <button onclick="goLocation('employee')">Employee</button> |
+
+  <button onclick="goLocation('about')">About</button> |
+
+  <button onclick="goLocation('login')">logout</button> |
+
+  <input id="searchTxt" type="" name="">
+  <select id="field">
+    <option value="firstName">Name</option>
+    <option value="city">Email</option>
+    <option value="age">Address</option>
+    <option value="phone">Phone</option>
+  </select>
+  <button onclick="doSearch()">Search</button>
+  <hr />
+
+  <p>Welcome to <%= title %> <button onclick="goLocation('employee/add')">Add Employee</button></p>
+
+
+  <!-- <button onclick="goLocation('customer/add')">Add Customer</button> -->
+
+  <div class="page-data">
+
+    <div class="data-table">
+
+      <table border="1" cellpadding="7" cellspacing="7">
+
+        <thead>
+
+          <tr>
+
+            <th width="20px">No</th>
+
+            <th width="250px">firstName</th>
+
+            <th width="220px">lastName</th>
+
+            <th width="300px">city</th>
+
+            <th width="100px">Phone</th>
+
+            <th width="300px">age</th>
+
+            <th width="300px">dob</th>
+
+            <th>Edit</th>
+
+            <th>Delete</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+          <% if(data.length){for (var i=0;i < data.length;i++) { %>
+
+            <tr>
+
+              <td>
+                <%=data[i].id%>
+              </td>
+
+              <td>
+                <%=data[i].firstName%>
+              </td>
+
+              <td>
+                <%=data[i].lastName%>
+              </td>
+
+              <td>
+                <%=data[i].city%>
+              </td>
+
+              <td>
+                <%=data[i].phone%>
+                  </th>
+
+              <td>
+                <%=data[i].age%>
+                  </th>
+
+              <td>
+                <%=data[i].dob%>
+                  </th>
+
+              <td><button onclick="goLocation('employee/edit/<%=data[i].id%>')">Edit</button>
+
+              <td><button onclick="deleteEmployee('<%=data[i].id%>')">Delete</button></td>
+
+            </tr>
+
+            <% } }else{ %>
+
+              <tr>
+
+                <td colspan="7">No employee found</td>
+
+              </tr>
+
+              <% } %>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

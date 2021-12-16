@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let doLogin = () =>{
+        let username = $("#username").val();
+        let password = $("#password").val();
+        if(username == password){
+          location = "/home";
+        }else{
+          alert("username or password is incorrect");
+        }
+      }
+    </script>
+    <h1><%= title %></h1>
+    <p><%= title %></p>
+    <form>
+      <input id="username" type="" name="" placeholder="Username"><br/><br/>
+      <input id="password" type="" name="" placeholder="Password"><br/><br/>
+      <input type="button" value="Login" name="" onclick="doLogin()"><br/><br/>
+    </form>
+  </body>
+</html>

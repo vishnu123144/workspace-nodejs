@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let addCustomer = () =>{
+        let name = $("#name").val();
+        let email = $("#email").val();
+        let phone = $("#phone").val();
+        let address = $("#address").val();
+        
+        $.ajax({ //$.ajax with POST 
+          url : "/api/customer", //end point
+          type: "POST", 
+          data : {name,email,phone,address},
+          success: function(data, textStatus, jqXHR) {
+            if(data.result == "ok"){
+              location = "/customer";
+            }else{              
+              alert("username or password is incorrect");
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown){
+            alert("Unable to connect remote server..");
+          }
+      });
+      }
+    </script>
+    <h1><%= title %></h1>
+    <form>
+      <input id="name" type="" name="" placeholder="Name"><br/><br/>
+      <input id="email" type="" name="" placeholder="Email"><br/><br/>
+      <input id="phone" type="" name="" placeholder="Phone"><br/><br/>
+      <input id="address" type="" name="" placeholder="Address"><br/><br/>
+      <input type="button" value="Add" name="" onclick="addCustomer()"><br/><br/>
+    </form>
+  </body>
+</html>
